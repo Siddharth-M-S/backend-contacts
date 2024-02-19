@@ -37,7 +37,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
   //   res.json({ message: 'Register the user' })
 })
-//@desc Register a user
+//@desc login a user
 //@route POST/api/users/login
 //@access public
 
@@ -61,7 +61,7 @@ const loginUser = asyncHandler(async (req, res) => {
         },
       },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: '1m' }
+      { expiresIn: '15m' }
     ) // token expire time
     res.status(200).json({ accesstoken })
   } else {
@@ -70,11 +70,12 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 })
 
-//@desc Register a user
+//@desc current  user
 //@route POST/api/users/current
 //@access public
 const currentUser = asyncHandler(async (req, res) => {
-  res.json({ message: 'Current user information' })
+  res.json(req.user)
+  next()
 })
 module.exports = {
   registerUser,
