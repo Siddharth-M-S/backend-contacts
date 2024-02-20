@@ -35,26 +35,29 @@ const addContact = asyncHandler(async (req, res) => {
 })
 
 const UpdateContact = asyncHandler(async (req, res) => {
+  console.log('1')
   const contacts = contact.findById(req.params.id)
-  console.log(req)
+  // let user_id = contacts.user_id
+  // const req_id = req.user.id
+  // console.log('2')
   if (!contacts) {
     // console.log(contacts)
     res.status(404)
     throw new Error('Contact not found')
   }
-  // console.log(contacts.user_id.toString())
-  // console.log(req.user.id)
-  if (contacts.user_id.toString() !== req.user.id) {
+
+  if (contacts.user_id !== req.user.d) {
+    // console.log('$')
     res.status(403)
     throw new Error("User don't have permission to update other user contacts")
+    // res.send('not allowed')
   }
+  // console.log('5')
   // eslint-disable-next-linno-underscore-dangle
   const updatedcontacts = await contact.findByIdAndUpdate(
     req.params.id,
-    req.body, ///
-    {
-      new: true,
-    }
+    req.body,
+    { new: true }
   )
 
   console.log('updated contacts process')
